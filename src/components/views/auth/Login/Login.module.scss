@@ -36,6 +36,20 @@
       padding: 10px;
       border: none;
     }
+    &__devider {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+    &__other {
+      width: 100%;
+      &__button {
+        background-color: #000;
+        color: #fff;
+        width: 100%;
+        padding: 10px;
+        border: none;
+      }
+    }
   }
   &__link {
     a {

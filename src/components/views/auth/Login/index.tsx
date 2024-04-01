@@ -65,7 +65,18 @@ const LoginView = () => {
             {isLoading ? "Loadings..." : "Login"}
           </button>
         </form>
+        <hr className={styles.login__form__devider} />
+        <div className={styles.login__form__other}>
+          <button
+            onClick={() => signIn("google", { callbackUrl, redirect: false })}
+            className={styles.login__form__other__button}
+          >
+            {" "}
+            Login with Google
+          </button>
+        </div>
       </div>
+
       {error && <p className={styles.login__error}>{error}</p>}
       <p className={styles.login__link}>
         Don{"'"}t Have an account? Sign Up{" "}
