@@ -1,0 +1,14 @@
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border: none;
+  margin: 5px 0px 5px 0px;
+  cursor: pointer;
+}
+
+.primary {
+  background-color: #000;
+  color: #fff;
+}
