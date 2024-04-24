@@ -22,7 +22,7 @@ export async function signUp(
     }
     userData.password = await bcrypt.hash(userData.password, 10);
     userData.created_at = new Date();
-    addData("users", userData, (result: boolean) => {
+    await addData("users", userData, (result: boolean) => {
       callback(result);
     });
   }
