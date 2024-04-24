@@ -47,8 +47,12 @@ export async function retrieveDataByField(
   return data;
 }
 
-export async function addData(userData: any, callback: Function) {
-  const data = await addDoc(collection(firestore, "users"), userData)
+export async function addData(
+  collectionName: string,
+  Data: any,
+  callback: Function
+) {
+  const data = await addDoc(collection(firestore, collectionName), Data)
     .then(() => {
       callback(true);
     })
@@ -79,15 +83,9 @@ export async function signUp(
       userData.role = "member";
     }
     userData.password = await bcrypt.hash(userData.password, 10);
-
-    await addDoc(collection(firestore, "users"), userData)
-      .then(() => {
-        callback(true);
-      })
-      .catch((error) => {
-        callback(false);
-        console.log(error);
-      });
+    await addData("users", userData, (result: boolean) => {
+      callback(result);
+    });
   }
 }
 
@@ -109,16 +107,18 @@ export async function signIn(email: string) {
 
 export async function loginWithGoogle(
   data: { email: string; role?: string },
-  callback: Function
+  callBack: Function
 ) {
   const user = await retrieveDataByField("users", "email", data.email);
 
   if (user.length > 0) {
-    callback(user[0]);
+    callBack(user[0]);
   } else {
     data.role = "member";
-    await addDoc(collection(firestore, "users"), data).then(() => {
-      callback(data);
+    await addData("users", data.email, (result: boolean) => {
+      if (result) {
+        callBack(result);
+      }
     });
   }
 }
