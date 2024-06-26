@@ -1,6 +1,6 @@
 import DashboardAdminView from "@/components/views/admin/Dashboard";
 
-const adminPage = () => {
+const AdminPage = () => {
   return (
     <>
       <DashboardAdminView />
@@ -8,4 +8,4 @@ const adminPage = () => {
   );
 };
 
-export default adminPage;
+export default AdminPage;
