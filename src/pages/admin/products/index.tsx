@@ -1,13 +1,11 @@
-import AdminLayout from "@/components/layouts/AdminLayout";
+import AdminProductView from "@/components/views/admin/Product";
 
-const adminProductPage = () => {
+const AdminProductPage = () => {
   return (
-    <AdminLayout>
-      <div>
-        <div>Product Page</div>
-      </div>
-    </AdminLayout>
+    <>
+      <AdminProductView />
+    </>
   );
 };
 
-export default adminProductPage;
+export default AdminProductPage;

@@ -1,10 +1,8 @@
-import Link from "next/link";
 import styles from "./Register.module.scss";
 import { useRouter } from "next/router";
 import { FormEvent, use, useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
-import instance from "@/lib/axios/instance";
 import authServices from "@/services/auth";
 import AuthLayout from "@/components/layouts/AuthLayout";
 
@@ -26,6 +24,7 @@ const RegisterView = () => {
     };
 
     const result = await authServices.registerAccount(data);
+    console.log(result);
 
     if (result.status === 200) {
       form.reset();
