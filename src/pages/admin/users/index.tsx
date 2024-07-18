@@ -9,6 +9,7 @@ const AdminUserPage = () => {
       const { data } = await userServices.getAllUsers();
       setUsers(data.data);
     };
+
     getAllUsers();
   }, []);
 
