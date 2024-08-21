@@ -24,7 +24,6 @@ const RegisterView = () => {
     };
 
     const result = await authServices.registerAccount(data);
-    console.log(result);
 
     if (result.status === 200) {
       form.reset();

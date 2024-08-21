@@ -42,16 +42,19 @@ const authOptions: NextAuthOptions = {
   callbacks: {
     async jwt({ token, account, profile, user }: any) {
       if (account?.provider === "credentials") {
+        token.id = user.id;
         token.email = user.email;
         token.fullname = user.fullname;
         token.phone = user.phone;
         token.role = user.role;
+        token.image = user.image;
       }
 
       if (account?.provider === "google") {
         const data = {
           fullname: user.name,
           email: user.email,
+          image: user.image,
           type: "google",
         };
 
@@ -59,6 +62,8 @@ const authOptions: NextAuthOptions = {
           token.email = data.email;
           token.fullname = data.fullname;
           token.role = data.role;
+          token.image = data.image;
+          token.id = data.id;
         });
       }
 
@@ -66,6 +71,9 @@ const authOptions: NextAuthOptions = {
     },
 
     async session({ session, token }: any) {
+      if ("id" in token) {
+        session.user.id = token.id;
+      }
       if ("email" in token) {
         session.user.email = token.email;
       }
@@ -77,6 +85,9 @@ const authOptions: NextAuthOptions = {
       }
       if ("role" in token) {
         session.user.role = token.role;
+      }
+      if ("image" in token) {
+        session.user.role = token.image;
       }
 
       const accessToken = jwt.sign(token, process.env.NEXTAUTH_SECRET || "", {
