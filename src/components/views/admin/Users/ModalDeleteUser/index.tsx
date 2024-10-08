@@ -2,17 +2,33 @@ import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import userServices from "@/services/user";
 import styles from "./ModalDeleteUser.module.scss";
-import { useSession } from "next-auth/react";
+import { User } from "@/types/user.type";
+import { Dispatch, SetStateAction, useState } from "react";
+
+type PropsTypes = {
+  deleteUser: User | any;
+  setDeleteUser: Dispatch<SetStateAction<{}>>;
+  setUserData: Dispatch<SetStateAction<User[]>>;
+  session: any;
+};
 
 const ModalDeleteUser = (props: any) => {
-  const { deleteUser, setDeleteUser, setUserData } = props;
-  const session: any = useSession();
+  const { deleteUser, setDeleteUser, setUserData, session } = props;
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
-    userServices.deleteusers(deleteUser.id, session.data?.accessToken);
-    setDeleteUser({});
-    const { data } = await userServices.getAllUsers();
-    setUserData(data.data);
+    const result = await userServices.deleteusers(
+      deleteUser.id,
+      session.data?.accessToken
+    );
+    if (result.status === 200) {
+      setIsLoading(false);
+      setDeleteUser({});
+      const { data } = await userServices.getAllUsers();
+      setUserData(data.data);
+    } else {
+      setIsLoading(false);
+    }
   };
 
   return (

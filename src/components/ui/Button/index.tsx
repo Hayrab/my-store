@@ -6,10 +6,18 @@ type PropType = {
   children: React.ReactNode;
   variant?: string;
   className?: string;
+  disabled?: boolean;
 };
 
 const Button = (props: PropType) => {
-  const { onClick, type, children, variant = "primary", className } = props;
+  const {
+    onClick,
+    type,
+    children,
+    variant = "primary",
+    className,
+    disabled,
+  } = props;
 
   return (
     <div className={styles.container}>
@@ -17,6 +25,7 @@ const Button = (props: PropType) => {
         type={type}
         onClick={onClick}
         className={`${styles[variant]} ${styles.button} ${className}`}
+        disabled={disabled}
       >
         {children}
       </button>

@@ -23,13 +23,15 @@ const RegisterView = () => {
       password: form.password.value,
     };
 
-    const result = await authServices.registerAccount(data);
+    try {
+      const result = await authServices.registerAccount(data);
 
-    if (result.status === 200) {
-      form.reset();
-      setIsLoading(false);
-      push("/auth/login");
-    } else {
+      if (result.status === 200) {
+        form.reset();
+        setIsLoading(false);
+        push("/auth/login");
+      }
+    } catch (error) {
       setIsLoading(false);
       setError("Email atau No Phone sudah ada");
     }

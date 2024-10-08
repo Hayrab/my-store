@@ -1,5 +1,4 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { signUp } from "@/services/auth/services";
 import jwt from "jsonwebtoken";
 import { retrieveDataById, updateData } from "@/lib/firebase/service";
 import { compare, hash } from "bcrypt";
@@ -45,7 +44,6 @@ export default async function handle(
       }
     );
   } else if (req.method === "PUT") {
-    const { user }: any = req.query;
     const token = req.headers.authorization?.split(" ")[1] || "";
     const { data } = req.body;
     jwt.verify(
@@ -71,7 +69,7 @@ export default async function handle(
             data.password = await hash(data.password, 10);
           }
 
-          await updateData("users", user[0], data, (result: boolean) => {
+          await updateData("users", decode.id, data, (result: boolean) => {
             if (result) {
               res.status(200).json({
                 status: true,

@@ -4,16 +4,19 @@ import styles from "./user.module.scss";
 import { useEffect, useState } from "react";
 import ModalUpdateUser from "./ModalUpdateUser";
 import ModalDeleteUser from "./ModalDeleteUser";
+import { User } from "@/types/user.type";
+import { useSession } from "next-auth/react";
 
 type PropType = {
-  dataUsers: any;
+  dataUsers: User[];
 };
 
 const UserAdminViews = (props: PropType) => {
   const { dataUsers } = props;
-  const [updateUser, setUpdateUser] = useState<any>({});
-  const [deleteUser, setDeleteUser] = useState<any>({});
-  const [userData, setUserData] = useState<any>([]);
+  const session: any = useSession();
+  const [updateUser, setUpdateUser] = useState<User | {}>({});
+  const [deleteUser, setDeleteUser] = useState<User | {}>({});
+  const [userData, setUserData] = useState<User[]>([]);
 
   useEffect(() => {
     setUserData(dataUsers);
@@ -35,7 +38,7 @@ const UserAdminViews = (props: PropType) => {
               </tr>
             </thead>
             <tbody>
-              {userData.map((user: any, index: number) => (
+              {userData.map((user: User, index: number) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{user.fullname}</td>
@@ -71,6 +74,7 @@ const UserAdminViews = (props: PropType) => {
           updatedUser={updateUser}
           setUpdatedUser={setUpdateUser}
           setUserData={setUserData}
+          session={session}
         />
       )}
       {Object.keys(deleteUser).length && (
@@ -78,6 +82,7 @@ const UserAdminViews = (props: PropType) => {
           deleteUser={deleteUser}
           setDeleteUser={setDeleteUser}
           setUserData={setUserData}
+          session={session}
         />
       )}
     </>
