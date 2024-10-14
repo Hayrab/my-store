@@ -1,19 +1,22 @@
 import AdminLayout from "@/components/layouts/AdminLayout";
 import Button from "@/components/ui/Button";
 import styles from "./Products.module.scss";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Product } from "@/types/product.type";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
+import ModalAddProduct from "./ModalAddProduct";
 
 type PropType = {
   dataProduct: Product[];
+  setToaster: Dispatch<SetStateAction<{}>>;
 };
 
 const ProductsAdminViews = (props: PropType) => {
-  const { dataProduct } = props;
+  const { dataProduct, setToaster } = props;
   const session: any = useSession();
+  const [modalAddProduct, setModalAddProduct] = useState(false);
 
   const [productsData, setProductsData] = useState<Product[]>([]);
   console.log(productsData);
@@ -26,6 +29,14 @@ const ProductsAdminViews = (props: PropType) => {
       <AdminLayout>
         <div>
           <h1>User Admin Page</h1>
+          <Button
+            type="button"
+            className={styles.Products__buttonAdd}
+            onClick={() => setModalAddProduct(true)}
+          >
+            <i className="bx bx-plus"></i>
+            Add Product
+          </Button>
           <table className={styles.Products__table}>
             <thead>
               <tr>
@@ -97,6 +108,13 @@ const ProductsAdminViews = (props: PropType) => {
           </table>
         </div>
       </AdminLayout>
+      {modalAddProduct && (
+        <ModalAddProduct
+          setProductsData={setProductsData}
+          setModalAddProduct={setModalAddProduct}
+          setToaster={setToaster}
+        />
+      )}
     </>
   );
 };

@@ -7,10 +7,12 @@ type PropType = {
   placeholders?: string;
   defaultValue?: string;
   disabled?: boolean;
+  onChange?: (e: any) => void;
 };
 
 const Input = (props: PropType) => {
-  const { label, name, type, placeholders, defaultValue, disabled } = props;
+  const { label, name, type, placeholders, defaultValue, disabled, onChange } =
+    props;
 
   return (
     <div className={styles.container}>
@@ -23,6 +25,7 @@ const Input = (props: PropType) => {
         className={styles.container__input}
         defaultValue={defaultValue}
         disabled={disabled}
+        onChange={onChange}
       />
     </div>
   );
