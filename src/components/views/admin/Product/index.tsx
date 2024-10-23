@@ -19,7 +19,6 @@ const ProductsAdminViews = (props: PropType) => {
   const [modalAddProduct, setModalAddProduct] = useState(false);
 
   const [productsData, setProductsData] = useState<Product[]>([]);
-  console.log(productsData);
   useEffect(() => {
     setProductsData(dataProduct);
   }, [dataProduct]);

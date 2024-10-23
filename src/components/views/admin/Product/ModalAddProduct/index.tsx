@@ -5,6 +5,7 @@ import Select from "@/components/ui/Select";
 import { Dispatch, SetStateAction, useState } from "react";
 import styles from "./ModalAddProduct.module.scss";
 import { Product } from "@/types/product.type";
+import InputFile from "@/components/ui/InputFile";
 
 type PropsType = {
   setProductsData: Dispatch<SetStateAction<Product[]>>;
@@ -16,6 +17,7 @@ const ModalAddProduct = (props: PropsType) => {
   const { setModalAddProduct, setToaster, setProductsData } = props;
 
   const [isLoading, setIsLoadin] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [stockCount, setStockCount] = useState([{ size: "", qty: 0 }]);
 
   const handleStock = (e: any, i: number, type: string) => {
@@ -53,14 +55,14 @@ const ModalAddProduct = (props: PropsType) => {
           ]}
         />
         <Select
-          label="Category"
-          name="category"
+          label="Status"
+          name="status"
           options={[
             { label: "Release", value: "true" },
             { label: "Not Release", value: "false" },
           ]}
         />
-        <label htmlFor="stock">stock</label>
+        <label htmlFor="stock">Stock</label>
         {stockCount.map((item: { size: string; qty: number }, i: number) => (
           <div className={styles.form__stock} key={i}>
             <div className={styles.form__stock__item}>
@@ -83,6 +85,7 @@ const ModalAddProduct = (props: PropsType) => {
             </div>
           </div>
         ))}
+
         <Button
           type="button"
           className={styles.form__stock__button}
@@ -90,7 +93,17 @@ const ModalAddProduct = (props: PropsType) => {
         >
           Add New Stock
         </Button>
-        <Button type="submit" disabled={isLoading}>
+        <label>Image</label>
+        <InputFile
+          uploadedImage={uploadedImage}
+          setUploadedImage={setUploadedImage}
+          name="Image"
+        />
+        <Button
+          type="submit"
+          disabled={isLoading}
+          className={styles.form__stock__button}
+        >
           {isLoading ? "Loading..." : "Add Product"}
         </Button>
       </form>
