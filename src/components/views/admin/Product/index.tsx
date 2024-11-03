@@ -112,6 +112,7 @@ const ProductsAdminViews = (props: PropType) => {
           setProductsData={setProductsData}
           setModalAddProduct={setModalAddProduct}
           setToaster={setToaster}
+          session={session}
         />
       )}
     </>
