@@ -36,7 +36,6 @@ const ProfileMemberView = ({
       data,
       session.data?.accessToken
     );
-    console.log(result.data);
     try {
       if (result.status === 200) {
         setIsLoading("");

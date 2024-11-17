@@ -23,7 +23,6 @@ export default async function handler(
         async (err: any, decode: any) => {
           if (decode && decode.role === "admin") {
             let data = req.body;
-            console.log(data);
             data.created_at = new Date();
             data.updated_at = new Date();
             data.price = parseInt(data.price);
@@ -60,7 +59,6 @@ export default async function handler(
       const { product }: any = req.query;
       const { data } = req.body;
       const token = req.headers.authorization?.split(" ")[1] || "";
-      console.log(product, data, token);
       jwt.verify(
         token,
         process.env.NEXTAUTH_SECRET || "",
@@ -71,7 +69,6 @@ export default async function handler(
               product[0],
               data,
               (status: boolean) => {
-                console.log(product[0], data, status);
                 status
                   ? res.status(200).json({
                       status: true,

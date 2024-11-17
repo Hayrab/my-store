@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
 import ModalAddProduct from "./ModalAddProduct";
+import ModalUpdateProduct from "./ModalUpdateProduct";
 
 type PropType = {
   dataProduct: Product[];
@@ -17,6 +18,7 @@ const ProductsAdminViews = (props: PropType) => {
   const { dataProduct, setToaster } = props;
   const session: any = useSession();
   const [modalAddProduct, setModalAddProduct] = useState(false);
+  const [updatedProduct, setUpdatedProduct] = useState<Product | {}>({});
 
   const [productsData, setProductsData] = useState<Product[]>([]);
   useEffect(() => {
@@ -77,6 +79,9 @@ const ProductsAdminViews = (props: PropType) => {
                         <Button
                           className={styles.Products__table__action__edit}
                           type="button"
+                          onClick={() => {
+                            setUpdatedProduct(product);
+                          }}
                         >
                           <i className="bx bxs-edit"></i>
                         </Button>
@@ -112,6 +117,15 @@ const ProductsAdminViews = (props: PropType) => {
           setProductsData={setProductsData}
           setModalAddProduct={setModalAddProduct}
           setToaster={setToaster}
+          session={session}
+        />
+      )}
+      {Object.keys(updatedProduct).length > 0 && (
+        <ModalUpdateProduct
+          updatedProduct={updatedProduct}
+          setUpdatedProduct={setUpdatedProduct}
+          setToaster={setToaster}
+          setProductsData={setProductsData}
           session={session}
         />
       )}

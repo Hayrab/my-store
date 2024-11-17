@@ -11,7 +11,7 @@ const InputFile = (props: PropsTypes) => {
   const { uploadedImage, setUploadedImage, name } = props;
 
   return (
-    <div>
+    <div className={styles.file}>
       <label className={styles.file__label} htmlFor={name}>
         {uploadedImage?.name ? (
           <p>{uploadedImage?.name}</p>
