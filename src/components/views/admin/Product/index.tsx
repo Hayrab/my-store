@@ -8,6 +8,7 @@ import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
 import ModalAddProduct from "./ModalAddProduct";
 import ModalUpdateProduct from "./ModalUpdateProduct";
+import ModalDeleteProduct from "./ModalDeleteProduct";
 
 type PropType = {
   dataProduct: Product[];
@@ -19,6 +20,7 @@ const ProductsAdminViews = (props: PropType) => {
   const session: any = useSession();
   const [modalAddProduct, setModalAddProduct] = useState(false);
   const [updatedProduct, setUpdatedProduct] = useState<Product | {}>({});
+  const [deletedProduct, setDeletedProduct] = useState<Product | {}>({});
 
   const [productsData, setProductsData] = useState<Product[]>([]);
   useEffect(() => {
@@ -88,6 +90,9 @@ const ProductsAdminViews = (props: PropType) => {
                         <Button
                           type="button"
                           className={styles.Products__table__action__delete}
+                          onClick={() => {
+                            setDeletedProduct(product);
+                          }}
                         >
                           <i className="bx bxs-trash"></i>
                         </Button>
@@ -124,6 +129,15 @@ const ProductsAdminViews = (props: PropType) => {
         <ModalUpdateProduct
           updatedProduct={updatedProduct}
           setUpdatedProduct={setUpdatedProduct}
+          setToaster={setToaster}
+          setProductsData={setProductsData}
+          session={session}
+        />
+      )}
+      {Object.keys(deletedProduct).length > 0 && (
+        <ModalDeleteProduct
+          deletedProduct={deletedProduct}
+          setDeletedProduct={setDeletedProduct}
           setToaster={setToaster}
           setProductsData={setProductsData}
           session={session}
