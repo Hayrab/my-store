@@ -1,6 +1,9 @@
 import Image from "next/image";
 import styles from "./products.module.scss";
 import { Product } from "@/types/product.type";
+import { convertIDR } from "@/utils/currency";
+import Card from "./card";
+import Link from "next/link";
 
 type PropsTypes = {
   products: Product[];
@@ -11,7 +14,7 @@ const ProductsView = (props: PropsTypes) => {
 
   return (
     <div className={styles.product}>
-      <h1 className={styles.product__title}>ProductsView</h1>
+      <h1 className={styles.product__title}>ProductsView({products.length})</h1>
       <div className={styles.product__main}>
         <div className={styles.product__main__filter}>
           <div className={styles.product__main__filter__data}>
@@ -45,19 +48,11 @@ const ProductsView = (props: PropsTypes) => {
           </div>
         </div>
         <div className={styles.product__main__content}>
-          <h2>product</h2>
-          <div className={styles.product__main__content__item}>
-            {products.map((product, index) => (
-              <div key={product.id}>
-                <Image
-                  width={500}
-                  height={500}
-                  src={product.image}
-                  alt={product.name}
-                />
-              </div>
-            ))}
-          </div>
+          {products.map((product) => (
+            <Link href={`/products/${product.id}`} key={product.id}>
+              <Card product={product} />
+            </Link>
+          ))}
         </div>
       </div>
     </div>

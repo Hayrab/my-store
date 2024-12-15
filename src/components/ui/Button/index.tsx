@@ -20,7 +20,7 @@ const Button = (props: PropType) => {
   } = props;
 
   return (
-    <div className={styles.container}>
+    <>
       <button
         type={type}
         onClick={onClick}
@@ -29,7 +29,7 @@ const Button = (props: PropType) => {
       >
         {children}
       </button>
-    </div>
+    </>
   );
 };
 
