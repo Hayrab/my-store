@@ -1,11 +1,14 @@
+import { ToasterContext } from "@/context/ToasterContext";
 import styles from "./Toaster.module.scss";
-import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-
-type PropsTypes = {
-  variant: string;
-  message?: string;
-  setToaster: Dispatch<SetStateAction<{}>>;
-};
+import {
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { ToasterType } from "@/types/toaster.type";
 
 const toasterVariant: any = {
   success: {
@@ -28,8 +31,8 @@ const toasterVariant: any = {
   },
 };
 
-const Toaster = (props: PropsTypes) => {
-  const { variant = "warning", message, setToaster } = props;
+const Toaster = () => {
+  const { toaster, setToaster }: ToasterType = useContext(ToasterContext);
   const [lengthBar, setLengthBar] = useState<number>(100);
   const timerRef = useRef<any>(null);
 
@@ -46,20 +49,30 @@ const Toaster = (props: PropsTypes) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (lengthBar < 0) {
+      setToaster({});
+    }
+  }, [lengthBar, setToaster]);
+
   return (
-    <div className={`${styles.toaster} ${styles[`toaster--${variant}`]}`}>
+    <div
+      className={`${styles.toaster} ${styles[`toaster--${toaster.variant}`]}`}
+    >
       <div className={styles.toaster__main}>
         <div className={styles.toaster__main__icon}>
           <i
-            className={`bx ${toasterVariant[variant].icon}`}
-            style={{ color: toasterVariant[variant].barColor }}
+            className={`bx ${toasterVariant[`${toaster.variant}`].icon}`}
+            style={{ color: toasterVariant[`${toaster.variant}`].barColor }}
           />
         </div>
         <div className={styles.toaster__main__text}>
           <p className={styles.toaster__main__text__title}>
-            {toasterVariant[variant].title}
+            {toasterVariant[`${toaster.variant}`].title}
           </p>
-          <p className={styles.toaster__main__text__message}>{message}</p>
+          <p className={styles.toaster__main__text__message}>
+            {toaster.message}
+          </p>
         </div>
         <i
           className={`bx bx-x ${styles.toaster__main__close}`}
@@ -68,13 +81,13 @@ const Toaster = (props: PropsTypes) => {
       </div>
       <div
         className={styles.toaster__timer}
-        style={{ backgroundColor: toasterVariant[variant].color }}
+        style={{ backgroundColor: toasterVariant[`${toaster.variant}`].color }}
       >
         <div
           style={{
             width: `${lengthBar}%`,
             height: "100%",
-            backgroundColor: toasterVariant[variant].barColor,
+            backgroundColor: toasterVariant[`${toaster.variant}`].barColor,
           }}
         ></div>
       </div>

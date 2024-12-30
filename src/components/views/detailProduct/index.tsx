@@ -4,25 +4,24 @@ import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
 import Button from "@/components/ui/Button";
 import { useSession } from "next-auth/react";
-import { stat } from "fs";
 import { useRouter } from "next/router";
-import handle from "@/pages/api/user/profile";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
 import userServices from "@/services/user";
+import { ToasterContext } from "@/context/ToasterContext";
+import { ToasterType } from "@/types/toaster.type";
 
 type PropsType = {
   product: Product | any;
   cart: any;
   productId: string | string[] | undefined;
-  setToaster: Dispatch<SetStateAction<{}>>;
 };
 
 const DetailProductView = (props: PropsType) => {
-  const { product, cart, productId, setToaster } = props;
+  const { product, cart, productId } = props;
   const { status, data: session }: any = useSession();
   const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>();
-  console.log(product);
+  const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleAddToCart = async () => {
     if (selectedSize !== "") {

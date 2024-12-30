@@ -2,27 +2,35 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import styles from "../ModalProduct.module.scss";
 import { Product } from "@/types/product.type";
 import InputFile from "@/components/ui/InputFile";
 import productServices from "@/services/product";
 import { uploadFile } from "@/lib/firebase/service";
 import Image from "next/image";
+import { ToasterType } from "@/types/toaster.type";
+import { ToasterContext } from "@/context/ToasterContext";
 
 type PropsType = {
   setProductsData: Dispatch<SetStateAction<Product[]>>;
   setModalAddProduct: Dispatch<SetStateAction<boolean>>;
-  setToaster: Dispatch<SetStateAction<{}>>;
   session: any;
 };
 
 const ModalAddProduct = (props: PropsType) => {
-  const { setModalAddProduct, setToaster, setProductsData, session } = props;
+  const { setModalAddProduct, setProductsData, session } = props;
 
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [stockCount, setStockCount] = useState([{ size: "", qty: 0 }]);
+  const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleStock = (e: any, i: number, type: string) => {
     const newStock: any = [...stockCount];
@@ -75,7 +83,7 @@ const ModalAddProduct = (props: PropsType) => {
     const form: any = event.target as HTMLFormElement;
     const data: any = {
       name: form.name.value,
-      price: form.price.value,
+      price: parseInt(form.price.value),
       category: form.category.value,
       status: form.status.value,
       stock: stockCount,
@@ -98,7 +106,7 @@ const ModalAddProduct = (props: PropsType) => {
         setModalAddProduct(false);
       }}
     >
-      <h1>Update User</h1>
+      <h1>Add Product</h1>
       <form className={styles.form} onSubmit={handleFormSubmit}>
         <label htmlFor="image">Image</label>
         <div className={styles.form__image}>
@@ -118,18 +126,21 @@ const ModalAddProduct = (props: PropsType) => {
           />
         </div>
         <Input
+          className={styles.form__input}
           label="Name"
           name="name"
           type="text"
           placeholders="Insert Product name"
         />
         <Input
+          className={styles.form__input}
           label="Price"
           name="price"
           type="text"
           placeholders="Insert Product name"
         />
         <Select
+          className={styles.form__select}
           label="Category"
           name="category"
           options={[
@@ -138,6 +149,7 @@ const ModalAddProduct = (props: PropsType) => {
           ]}
         />
         <Select
+          className={styles.form__select}
           label="Status"
           name="status"
           options={[
@@ -145,11 +157,12 @@ const ModalAddProduct = (props: PropsType) => {
             { label: "Not Release", value: "false" },
           ]}
         />
-        <label htmlFor="stock">Stock</label>
+        <h3>Stock</h3>
         {stockCount.map((item: { size: string; qty: number }, i: number) => (
           <div className={styles.form__stock} key={i}>
             <div className={styles.form__stock__item}>
               <Input
+                className={styles.form__input}
                 label="Size"
                 name="size"
                 type="text"
@@ -159,6 +172,7 @@ const ModalAddProduct = (props: PropsType) => {
             </div>
             <div className={styles.form__stock__item}>
               <Input
+                className={styles.form__input}
                 label="QTY"
                 name="qty"
                 type="number"

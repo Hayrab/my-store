@@ -1,11 +1,8 @@
 import ProductsAdminViews from "@/components/views/admin/Product";
 import productServices from "@/services/product";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-type PropsTypes = {
-  setToaster: Dispatch<SetStateAction<{}>>;
-};
-const AdminProductPage = ({ setToaster }: PropsTypes) => {
+const AdminProductPage = () => {
   const [products, setProducts] = useState([]);
   const getAllProducts = async () => {
     const { data } = await productServices.getAllProducts();
@@ -17,7 +14,7 @@ const AdminProductPage = ({ setToaster }: PropsTypes) => {
 
   return (
     <>
-      <ProductsAdminViews dataProduct={products} setToaster={setToaster} />
+      <ProductsAdminViews dataProduct={products} />
     </>
   );
 };

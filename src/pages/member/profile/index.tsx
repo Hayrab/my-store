@@ -2,13 +2,9 @@ import ProfileMemberView from "@/components/views/member/Profile";
 import userServices from "@/services/user";
 import { User } from "@/types/user.type";
 import { useSession } from "next-auth/react";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-type PropsTypes = {
-  setToaster: Dispatch<SetStateAction<{}>>;
-};
-
-const OrdersPage = ({ setToaster }: PropsTypes) => {
+const OrdersPage = () => {
   const [profile, setProfile] = useState<User | {}>({});
   const session: any = useSession();
   useEffect(() => {
@@ -28,7 +24,6 @@ const OrdersPage = ({ setToaster }: PropsTypes) => {
         profile={profile}
         setProfile={setProfile}
         session={session}
-        setToaster={setToaster}
       />
     </>
   );

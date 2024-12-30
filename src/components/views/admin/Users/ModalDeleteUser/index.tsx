@@ -3,7 +3,9 @@ import Modal from "@/components/ui/Modal";
 import userServices from "@/services/user";
 import styles from "./ModalDeleteUser.module.scss";
 import { User } from "@/types/user.type";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { ToasterType } from "@/types/toaster.type";
+import { ToasterContext } from "@/context/ToasterContext";
 
 type PropsTypes = {
   deleteUser: User | any;
@@ -15,6 +17,7 @@ type PropsTypes = {
 const ModalDeleteUser = (props: any) => {
   const { deleteUser, setDeleteUser, setUserData, session } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleDelete = async () => {
     const result = await userServices.deleteusers(
@@ -26,8 +29,16 @@ const ModalDeleteUser = (props: any) => {
       setDeleteUser({});
       const { data } = await userServices.getAllUsers();
       setUserData(data.data);
+      setToaster({
+        variant: "success",
+        message: "Success Delete User ",
+      });
     } else {
       setIsLoading(false);
+      setToaster({
+        variant: "danger",
+        message: "Failed Delete User ",
+      });
     }
   };
 

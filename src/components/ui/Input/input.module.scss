@@ -1,12 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
-  margin: 20px 0;
-
-  &__input {
-    padding: 15px;
-    background-color: #eee;
+  &__label {
     margin-top: 5px;
+  }
+  &__input {
+    padding: 12px;
+    background-color: #eee;
     border: none;
     outline: none;
     border-radius: 8px;

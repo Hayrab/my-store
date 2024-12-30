@@ -4,7 +4,16 @@ import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
 import userServices from "@/services/user";
 import { User } from "@/types/user.type";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
+import styles from "./ModalUpdateUser.module.scss";
+import { ToasterType } from "@/types/toaster.type";
+import { ToasterContext } from "@/context/ToasterContext";
 
 type PropTypes = {
   updatedUser: User | any;
@@ -16,6 +25,7 @@ type PropTypes = {
 const ModalUpdateUser = (props: PropTypes) => {
   const { updatedUser, setUpdatedUser, setUserData, session } = props;
   const [isLoading, setIsLoading] = useState(false);
+  const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleUpdateUser = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -35,8 +45,16 @@ const ModalUpdateUser = (props: PropTypes) => {
       const { data } = await userServices.getAllUsers();
       setUserData(data.data);
       setUpdatedUser({});
+      setToaster({
+        variant: "success",
+        message: "Success Update User ",
+      });
     } else {
       setIsLoading(false);
+      setToaster({
+        variant: "Danger",
+        message: "Failed Update User ",
+      });
     }
   };
 
@@ -45,6 +63,7 @@ const ModalUpdateUser = (props: PropTypes) => {
       <h1>Update User</h1>
       <form onSubmit={handleUpdateUser}>
         <Input
+          className={styles.form__input}
           label="Email"
           name="email"
           type="text"
@@ -52,6 +71,7 @@ const ModalUpdateUser = (props: PropTypes) => {
           disabled
         />
         <Input
+          className={styles.form__input}
           label="Fullname"
           name="fullname"
           type="text"
@@ -59,6 +79,7 @@ const ModalUpdateUser = (props: PropTypes) => {
           disabled
         />{" "}
         <Input
+          className={styles.form__input}
           label="Phone"
           name="phone"
           type="text"
@@ -66,6 +87,7 @@ const ModalUpdateUser = (props: PropTypes) => {
           disabled
         />
         <Select
+          className={styles.form__select}
           label="Role"
           name="role"
           defaultValue={updatedUser.role}

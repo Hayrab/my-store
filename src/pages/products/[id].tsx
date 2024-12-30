@@ -4,13 +4,9 @@ import userServices from "@/services/user";
 import { Product } from "@/types/product.type";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
-type PropsTypes = {
-  setToaster: Dispatch<SetStateAction<{}>>;
-};
-
-const DetailProductPage = ({ setToaster }: PropsTypes) => {
+const DetailProductPage = () => {
   const { id } = useRouter().query;
   const [product, setProduct] = useState<Product | {}>([]);
   const [cart, setCart] = useState();
@@ -38,12 +34,7 @@ const DetailProductPage = ({ setToaster }: PropsTypes) => {
 
   return (
     <>
-      <DetailProductView
-        product={product}
-        cart={cart}
-        productId={id}
-        setToaster={setToaster}
-      />
+      <DetailProductView product={product} cart={cart} productId={id} />
     </>
   );
 };

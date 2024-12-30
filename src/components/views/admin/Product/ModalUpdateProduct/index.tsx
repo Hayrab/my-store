@@ -2,34 +2,36 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/Input";
 import Modal from "@/components/ui/Modal";
 import Select from "@/components/ui/Select";
-import { Dispatch, FormEvent, SetStateAction, useState } from "react";
+import {
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import styles from "../ModalProduct.module.scss";
 import { Product } from "@/types/product.type";
 import InputFile from "@/components/ui/InputFile";
 import productServices from "@/services/product";
 import { uploadFile } from "@/lib/firebase/service";
 import Image from "next/image";
+import { ToasterContext } from "@/context/ToasterContext";
+import { ToasterType } from "@/types/toaster.type";
 
 type PropsType = {
   setProductsData: Dispatch<SetStateAction<Product[]>>;
   setUpdatedProduct: Dispatch<SetStateAction<boolean>>;
-  setToaster: Dispatch<SetStateAction<{}>>;
   updatedProduct: Product | any;
   session: any;
 };
 
 const ModalUpdateProduct = (props: PropsType) => {
-  const {
-    updatedProduct,
-    setUpdatedProduct,
-    setToaster,
-    setProductsData,
-    session,
-  } = props;
+  const { updatedProduct, setUpdatedProduct, setProductsData, session } = props;
 
   const [isLoading, setIsLoading] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<File | null>(null);
   const [stockCount, setStockCount] = useState(updatedProduct.stock);
+  const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleStock = (e: any, i: number, type: string) => {
     const newStock: any = [...stockCount];
@@ -43,7 +45,7 @@ const ModalUpdateProduct = (props: PropsType) => {
   ) => {
     const data = {
       name: form.name.value,
-      price: form.price.value,
+      price: parseInt(form.price.value),
       category: form.category.value,
       status: form.status.value,
       stock: stockCount,
@@ -132,6 +134,7 @@ const ModalUpdateProduct = (props: PropsType) => {
           />
         </div>
         <Input
+          className={styles.form__input}
           label="Name"
           name="name"
           type="text"
@@ -139,6 +142,7 @@ const ModalUpdateProduct = (props: PropsType) => {
           defaultValue={updatedProduct.name}
         />
         <Input
+          className={styles.form__input}
           label="Price"
           name="price"
           type="text"
@@ -146,6 +150,7 @@ const ModalUpdateProduct = (props: PropsType) => {
           defaultValue={updatedProduct.price}
         />
         <Select
+          className={styles.form__select}
           label="Category"
           name="category"
           options={[
@@ -155,6 +160,7 @@ const ModalUpdateProduct = (props: PropsType) => {
           defaultValue={updatedProduct.stock}
         />
         <Select
+          className={styles.form__select}
           label="Status"
           name="status"
           options={[
@@ -168,6 +174,7 @@ const ModalUpdateProduct = (props: PropsType) => {
           <div className={styles.form__stock} key={i}>
             <div className={styles.form__stock__item}>
               <Input
+                className={styles.form__input}
                 label="Size"
                 name="size"
                 type="text"
@@ -178,6 +185,7 @@ const ModalUpdateProduct = (props: PropsType) => {
             </div>
             <div className={styles.form__stock__item}>
               <Input
+                className={styles.form__input}
                 label="QTY"
                 name="qty"
                 type="number"

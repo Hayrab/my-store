@@ -1,15 +1,22 @@
 .container {
-  display: flex;
-  flex-direction: column;
-  margin: 20px 0;
-  &__select {
-    padding: 12px;
-    background-color: #eee;
+  &__label {
     margin-top: 5px;
-    border: none;
-    outline: none;
-    &:disable {
-      opacity: 0.7;
+  }
+  &__division {
+    display: flex;
+    flex-direction: column;
+    background-color: #eee;
+    border-radius: 8px;
+    padding-right: 10px;
+
+    &__select {
+      padding: 12px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      &:disable {
+        opacity: 0.7;
+      }
     }
   }
 }
