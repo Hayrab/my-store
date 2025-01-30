@@ -2,7 +2,7 @@ import Toaster from "@/components/ui/Toaster";
 import { ToasterContext } from "@/context/ToasterContext";
 import { Lato } from "next/font/google";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { useContext } from "react";
 import Navbar from "../Navbar";
 import { ToasterType } from "@/types/toaster.type";
 

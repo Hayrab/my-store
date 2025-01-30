@@ -22,7 +22,7 @@ const Select = (props: PropTypes) => {
   const optionsContainer = useMemo(() => {
     return (
       <>
-        {options.map((option: Option) => (
+        {options?.map((option: Option) => (
           <option
             value={option.value}
             key={option.label}

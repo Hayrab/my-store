@@ -17,8 +17,8 @@ const DetailProductPage = () => {
     setProduct(data.data);
   };
 
-  const getCart = async (session: string) => {
-    const { data } = await userServices.getCart(session);
+  const getCart = async () => {
+    const { data } = await userServices.getCart();
     setCart(data.data);
   };
 
@@ -28,7 +28,7 @@ const DetailProductPage = () => {
 
   useEffect(() => {
     if (session.data?.accessToken) {
-      getCart(session.data?.accessToken);
+      getCart();
     }
   }, [session]);
 

@@ -50,6 +50,8 @@
           align-items: center;
           justify-content: center;
           font-size: 36px;
+          object-fit: cover;
+          object-position: center;
         }
         &__title {
           margin-bottom: 20px;

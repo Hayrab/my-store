@@ -54,13 +54,16 @@ const CartView = (props: PropsType) => {
           {cart?.map((item: { id: string; size: string; qty: number }) => (
             <Fragment key={`${item.id} - ${item.size}`}>
               <div className={styles.cart__main__list__item}>
-                <Image
-                  width={150}
-                  height={150}
-                  src={`${getProduct(item.id)?.image}`}
-                  alt={`${item.id} - ${item.size}`}
-                  className={styles.cart__main__list__item__image}
-                />
+                {getProduct(item.id)?.image && (
+                  <Image
+                    width={150}
+                    height={150}
+                    src={`${getProduct(item.id)?.image}`}
+                    alt={`${item.id} - ${item.size}`}
+                    className={styles.cart__main__list__item__image}
+                  />
+                )}
+
                 <div className={styles.cart__main__list__item__info}>
                   <h4 className={styles.cart__main__list__item__info__title}>
                     {`${getProduct(item.id)?.name}`}

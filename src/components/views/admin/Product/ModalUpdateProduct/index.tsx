@@ -46,16 +46,13 @@ const ModalUpdateProduct = (props: PropsType) => {
     const data = {
       name: form.name.value,
       price: parseInt(form.price.value),
+      description: form.description.value,
       category: form.category.value,
       status: form.status.value,
       stock: stockCount,
       image: newImageUrl,
     };
-    const result = await productServices.updateProduct(
-      updatedProduct.id,
-      data,
-      session.data?.accessToken
-    );
+    const result = await productServices.updateProduct(updatedProduct.id, data);
     if (result.status === 200) {
       setIsLoading(false);
       setUploadedImage(null);
@@ -148,6 +145,14 @@ const ModalUpdateProduct = (props: PropsType) => {
           type="text"
           placeholders="Insert Product name"
           defaultValue={updatedProduct.price}
+        />
+        <Input
+          className={styles.form__input}
+          label="Description"
+          name="description"
+          type="text"
+          placeholders="Insert Description"
+          defaultValue={updatedProduct.description}
         />
         <Select
           className={styles.form__select}

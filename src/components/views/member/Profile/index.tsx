@@ -9,6 +9,7 @@ import {
   FormEvent,
   SetStateAction,
   useContext,
+  useEffect,
   useState,
 } from "react";
 import userServices from "@/services/user";
@@ -16,16 +17,20 @@ import { User } from "@/types/user.type";
 import { ToasterContext } from "@/context/ToasterContext";
 import { ToasterType } from "@/types/toaster.type";
 
-type PropsTypes = {
-  profile: User | any;
-  setProfile: Dispatch<SetStateAction<{}>>;
-  session: any;
-};
-
-const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
+const ProfileMemberView = () => {
   const [changeImage, setChangeImage] = useState<File | any>({});
   const [isLoading, setIsLoading] = useState<string>("");
+  const [profile, setProfile] = useState<User | any>({});
   const { setToaster }: ToasterType = useContext(ToasterContext);
+
+  const getProfile = async () => {
+    const { data } = await userServices.getProfile();
+    setProfile(data.data);
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   const handleChangeProfileForm = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -35,10 +40,7 @@ const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
       fullname: form.fullname.value,
       phone: form.phone.value,
     };
-    const result = await userServices.updateProfile(
-      data,
-      session.data?.accessToken
-    );
+    const result = await userServices.updateProfile(data);
     try {
       if (result.status === 200) {
         setIsLoading("");
@@ -79,10 +81,7 @@ const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
             const data = {
               image: newImageUrl,
             };
-            const result = await userServices.updateProfile(
-              data,
-              session.data?.accessToken
-            );
+            const result = await userServices.updateProfile(data);
             if (result.status === 200) {
               setIsLoading("");
               setProfile({
@@ -121,10 +120,7 @@ const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
       encryptedPassword: profile.password,
     };
     try {
-      const result = await userServices.updateProfile(
-        data,
-        session.data?.accessToken
-      );
+      const result = await userServices.updateProfile(data);
       if (result.status === 200) {
         setIsLoading("");
         setToaster({
@@ -141,6 +137,7 @@ const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
       });
     }
   };
+
   return (
     <MemberLayout>
       <h1 className={styles.profile__title}>Profile</h1>
@@ -193,6 +190,7 @@ const ProfileMemberView = ({ profile, setProfile, session }: PropsTypes) => {
               <Button
                 className={styles.profile__main__row__avatar__button}
                 type="submit"
+                disabled={!changeImage?.name}
               >
                 {isLoading === "avatar" ? "Loading" : "Update Avatar"}
               </Button>

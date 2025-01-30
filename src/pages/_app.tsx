@@ -3,7 +3,6 @@ import { ToasterProvider } from "@/context/ToasterContext";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
-import { useEffect, useState } from "react";
 
 export default function App({
   Component,

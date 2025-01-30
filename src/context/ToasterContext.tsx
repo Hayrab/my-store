@@ -1,4 +1,3 @@
-import Toaster from "@/components/ui/Toaster";
 import { createContext, useState } from "react";
 
 const ToasterContext = createContext({

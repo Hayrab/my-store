@@ -5,7 +5,7 @@ import { convertIDR } from "@/utils/currency";
 import Button from "@/components/ui/Button";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { Dispatch, SetStateAction, useContext, useState } from "react";
+import { useContext, useState } from "react";
 import userServices from "@/services/user";
 import { ToasterContext } from "@/context/ToasterContext";
 import { ToasterType } from "@/types/toaster.type";
@@ -18,7 +18,7 @@ type PropsType = {
 
 const DetailProductView = (props: PropsType) => {
   const { product, cart, productId } = props;
-  const { status, data: session }: any = useSession();
+  const { status }: any = useSession();
   const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>();
   const { setToaster }: ToasterType = useContext(ToasterContext);
@@ -48,10 +48,7 @@ const DetailProductView = (props: PropsType) => {
         ];
       }
       try {
-        const result = await userServices.addToCart(
-          { carts: newCart },
-          session.accessToken
-        );
+        const result = await userServices.addToCart({ carts: newCart });
         if (result.status == 200) {
           setSelectedSize("");
           setToaster({
@@ -91,6 +88,9 @@ const DetailProductView = (props: PropsType) => {
           <h3 className={styles.detail__main__right__price}>
             {convertIDR(product?.price)}
           </h3>
+          <p className={styles.detail__main__right__description}>
+            {product?.description}
+          </p>
           <div className={styles.detail__main__right__size}>
             {product?.stock?.map((item: { size: string; qty: number }) => (
               <div
@@ -115,6 +115,7 @@ const DetailProductView = (props: PropsType) => {
               </div>
             ))}
           </div>
+
           <Button
             className={styles.detail__main__right__add}
             type={status === "authenticated" ? `submit` : "button"}
