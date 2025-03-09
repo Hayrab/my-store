@@ -67,6 +67,10 @@
         border-radius: 8px;
         &form {
           height: 100px;
+          &__button {
+            margin-top: 20px;
+            width: 100%;
+          }
         }
       }
       &__password {
@@ -75,6 +79,10 @@
         border-radius: 8px;
         flex-direction: column;
         padding: 40px;
+        &__button {
+          margin-top: 20px;
+          width: 100%;
+        }
       }
     }
   }

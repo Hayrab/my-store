@@ -69,7 +69,7 @@ const ProfileMemberView = () => {
     setIsLoading("avatar");
     const form = e.target as HTMLFormElement;
     const file = form.image.files[0];
-    const newName = "profile." + file.name.split(".")[1];
+    const newName = "profile." + file?.name.split(".")[1];
     if (file) {
       uploadFile(
         profile.id,
@@ -105,7 +105,7 @@ const ProfileMemberView = () => {
       setChangeImage({});
       setToaster({
         variant: "danger",
-        message: "Failed Update Profile Picture",
+        message: "Profile Picture is Empty",
       });
     }
   };

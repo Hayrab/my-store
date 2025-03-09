@@ -1,4 +1,5 @@
 import AppShell from "@/components/Fragments/AppShell";
+import { CartProvider } from "@/context/CartContext";
 import { ToasterProvider } from "@/context/ToasterContext";
 import "@/styles/globals.css";
 import { SessionProvider } from "next-auth/react";
@@ -11,9 +12,11 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <ToasterProvider>
-        <AppShell>
-          <Component {...pageProps} />
-        </AppShell>
+        <CartProvider>
+          <AppShell>
+            <Component {...pageProps} />
+          </AppShell>
+        </CartProvider>
       </ToasterProvider>
     </SessionProvider>
   );

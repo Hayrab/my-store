@@ -3,7 +3,8 @@ import styles from "./Navbar.module.scss";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { CartContext } from "@/context/CartContext";
 
 const NavItem = [
   {
@@ -17,9 +18,12 @@ const NavItem = [
 ];
 
 const Navbar = () => {
+  const { cart, setCart }: any = useContext(CartContext);
   const { data }: any = useSession();
   const { pathname, push } = useRouter();
   const [dropdownUser, setDropdownUser] = useState<boolean>(false);
+
+  console.log(cart);
 
   return (
     <div className={styles.navbar}>
@@ -41,7 +45,9 @@ const Navbar = () => {
         <div className={styles.navbar__user}>
           <Link href="/cart" className={`${styles.navbar__user__cart}`}>
             <i className="bx bx-cart "></i>
-            <span className={styles.navbar__user__cart__totalcart}>4</span>
+            <span className={styles.navbar__user__cart__totalcart}>
+              {cart.length}
+            </span>
           </Link>
           <div
             className={styles.navbar__user__profile}
@@ -52,6 +58,7 @@ const Navbar = () => {
               height={40}
               src={data?.user.image}
               alt={data?.user.name}
+              className={styles.navbar__user__image}
             />
           </div>
           <div

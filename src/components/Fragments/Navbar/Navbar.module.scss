@@ -55,6 +55,8 @@
     }
     &__image {
       border-radius: 40px;
+      object-fit: cover;
+      object-position: center;
     }
     &__dropdown {
       position: absolute;
@@ -91,10 +93,10 @@
     }
   }
   &__button {
-    background-color: white;
+    background-color: black;
     border: none;
     padding: 12px 16px;
-    color: black;
+    color: white;
     cursor: pointer;
     border-radius: 12px;
   }

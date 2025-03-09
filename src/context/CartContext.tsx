@@ -3,12 +3,12 @@ import { useSession } from "next-auth/react";
 import { createContext, useEffect, useState } from "react";
 
 const CartContext = createContext({
-  cart: {},
-  setCart: ({}) => {},
+  cart: [], // Ensure cart is an array
+  setCart: ([]) => {},
 });
 
 const CartProvider = ({ children }: { children: React.ReactNode }) => {
-  const [cart, setCart] = useState<any>({});
+  const [cart, setCart] = useState<any>([]);
   const session: any = useSession();
 
   const getCart = async () => {

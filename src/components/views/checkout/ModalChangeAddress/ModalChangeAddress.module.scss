@@ -1,0 +1,26 @@
+.modal {
+  &__title {
+    margin-bottom: 20px;
+  }
+  &__address {
+    width: 100%;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+    &__title {
+      margin-bottom: 20px;
+    }
+    &__selected {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      &__note {
+        margin-bottom: 20px;
+      }
+    }
+    &--active {
+      border: 2px solid black;
+    }
+  }
+}

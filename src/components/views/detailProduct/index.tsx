@@ -20,7 +20,7 @@ const DetailProductView = (props: PropsType) => {
   const { product, cart, productId } = props;
   const { status }: any = useSession();
   const router = useRouter();
-  const [selectedSize, setSelectedSize] = useState<string>();
+  const [selectedSize, setSelectedSize] = useState<string>("");
   const { setToaster }: ToasterType = useContext(ToasterContext);
 
   const handleAddToCart = async () => {
@@ -62,7 +62,11 @@ const DetailProductView = (props: PropsType) => {
           message: "Failed add to cart",
         });
       }
-      console.log(newCart);
+    } else {
+      setToaster({
+        variant: "danger",
+        message: "Selected Size/Category is Empty",
+      });
     }
 
     return;

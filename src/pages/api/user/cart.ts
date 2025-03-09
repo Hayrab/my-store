@@ -12,24 +12,23 @@ export default async function handle(
   res: NextApiResponse
 ) {
   switch (req.method) {
-    case "GET":
-      {
-        verify(req, res, false, async (decoded: { id: string }) => {
-          const user: any = await retrieveDataById("users", decoded.id);
-          user ? responseApiSuccess(res, user.carts) : responseApiNotFound(res);
-        });
-      }
+    case "GET": {
+      verify(req, res, false, async (decoded: { id: string }) => {
+        const user: any = await retrieveDataById("users", decoded.id);
+        user ? responseApiSuccess(res, user.carts) : responseApiNotFound(res);
+      });
       break;
-    case "PUT":
-      {
+    }
+    case "PUT": {
+      verify(req, res, false, async (decoded: { id: string }) => {
         const { data } = req.body;
-        verify(req, res, false, async (decoded: { id: string }) => {
-          await updateData("users", decoded.id, data, (result: boolean) => {
-            result ? responseApiSuccess(res, data) : responseApiNotFound(res);
-          });
+        await updateData("users", decoded.id, data, (result: boolean) => {
+          result ? responseApiSuccess(res, data) : responseApiNotFound(res);
         });
-      }
+      });
       break;
+    }
+
     default: {
       responseApiNotAllowed(res);
       break;
