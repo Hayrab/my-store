@@ -1,0 +1,27 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  &__label {
+    margin-top: 5px;
+  }
+  &__input {
+    resize: none;
+    height: 80px;
+    padding: 12px;
+    background-color: #eee;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    &:disabled {
+      opacity: 0.7;
+    }
+  }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0;
+  }
+}

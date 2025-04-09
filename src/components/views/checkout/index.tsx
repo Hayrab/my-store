@@ -2,16 +2,13 @@ import { Product } from "@/types/product.type";
 import styles from "./Checkout.module.scss";
 import Image from "next/image";
 import { convertIDR } from "@/utils/currency";
-import Select from "@/components/ui/Select";
-import Input from "@/components/ui/Input";
+
 import { Fragment, useContext, useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import userServices from "@/services/user";
-import { CartContext } from "@/context/CartContext";
 import { ToasterType } from "@/types/toaster.type";
 import { ToasterContext } from "@/context/ToasterContext";
 import productServices from "@/services/product";
-import { Session } from "inspector";
 import { useSession } from "next-auth/react";
 import ModalChangeAddress from "./ModalChangeAddress";
 
@@ -21,18 +18,19 @@ const CheckoutView = () => {
   const [profile, setProfile] = useState<any>();
   const [seletctedAddress, setSelecetedAddress] = useState(0);
   const [changeAddress, setChangeAddress] = useState(false);
-  console.log(profile);
 
   const session: any = useSession();
 
   const getProfile = async () => {
     const { data } = await userServices.getProfile();
     setProfile(data.data);
-    data.data.address.filter((address: { isMain: boolean }, id: number) => {
-      if (address.isMain) {
-        setSelecetedAddress(id);
-      }
-    });
+    if (data?.data?.address?.length > 0) {
+      data.data.address.filter((address: { isMain: boolean }, id: number) => {
+        if (address.isMain) {
+          setSelecetedAddress(id);
+        }
+      });
+    }
   };
 
   const getAllProducts = async () => {
@@ -97,7 +95,9 @@ const CheckoutView = () => {
                 </Button>
               </div>
             ) : (
-              ""
+              <Button type="button" onClick={() => setChangeAddress(true)}>
+                Add New Address
+              </Button>
             )}
           </div>
           {profile?.carts?.length > 0 ? (
@@ -187,7 +187,8 @@ const CheckoutView = () => {
 
       {changeAddress && (
         <ModalChangeAddress
-          address={profile.address}
+          profile={profile}
+          setProfile={setProfile}
           setChangeAddress={setChangeAddress}
           setSelectedAddress={setSelecetedAddress}
           selectedAddress={seletctedAddress}
