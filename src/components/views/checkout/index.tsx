@@ -74,7 +74,7 @@ const CheckoutView = () => {
             {profile?.address?.length > 0 ? (
               <div className={styles.checkout__main__address__selected}>
                 <h4 className={styles.checkout__main__address__selected__title}>
-                  {profile?.address[seletctedAddress]?.recipient} -
+                  {profile?.address[seletctedAddress]?.recipient} -{" "}
                   {profile?.address[seletctedAddress]?.phone}
                 </h4>
                 <p
