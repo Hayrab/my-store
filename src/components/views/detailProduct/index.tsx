@@ -18,6 +18,7 @@ type PropsType = {
 
 const DetailProductView = (props: PropsType) => {
   const { product, cart, productId } = props;
+  console.log(cart);
   const { status }: any = useSession();
   const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>("");

@@ -16,7 +16,7 @@ const responseApi = (
 };
 
 export const responseApiSuccess = (res: NextApiResponse, data: any = {}) => {
-  responseApi(res, true, 200, "Succes", data);
+  responseApi(res, true, 200, "Success", data);
 };
 export const responseApiFailed = (res: NextApiResponse) => {
   responseApi(res, false, 400, "Failed");
